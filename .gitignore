@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*_features.csv
+*_features_v3.csv
+*_features_v3_EMPTY.csv
+*_results_v3.csv
+*_images.html
