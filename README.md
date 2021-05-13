@@ -26,7 +26,7 @@ this is a script to look through a directory of directories (e.g. a survey folde
 
 Using a previously trained classifer and feature files, create a 'results' file (<foldername>_results_v3.csv) where each image is classified according to the give classifier.
 
-Implemented in 'apply_model.R'
+Implemented in `apply_model.R`
 
 This script will look for feature files generate by the above script (I've made those files end in '_features_v3.csv' to identify them automatically), and run predictions on them from a given loaded model. For each feature file it will create a results file (ending '​_results_v3.csv'), which will contain 3 columns, the original filename, the probability it is in the positive class being predicted by the model, and a 'classification' (positive or negative) based on the threshold set in the script.
 
