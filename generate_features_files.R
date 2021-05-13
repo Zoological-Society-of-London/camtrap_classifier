@@ -9,8 +9,8 @@
 # The source directory full of directories of images. 
 # For example, this might be a survey directory and each subdirectory is a 
 # camera/location
-SOURCE_DIR = "/Volumes/camera_trap_data/Palewell_Common/"
-SOURCE_DIR = "cats_and_dogs_small/"
+#SOURCE_DIR = "/Volumes/camera_trap_data/Palewell_Common/"
+SOURCE_DIR = "cats_and_dogs_filtered/validation/"
 
 # Settings for custom crop function to remove the top 30px and bottom 120px of every image
 TOP_TRIM = 30

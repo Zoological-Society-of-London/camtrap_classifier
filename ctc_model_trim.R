@@ -10,10 +10,11 @@
 ###
 
 # Input directory of class 1
-TRAINING_POS_DIRECTORY = "cats_and_dogs_small/train/cats"
+TRAINING_POS_DIRECTORY = "cats_and_dogs_filtered/train/cats/"
 #TRAINING_POS_DIRECTORY = "~/Documents/data/shiya_images/human"
+
 # Input directory of class 2
-TRAINING_NEG_DIRECTORY = "cats_and_dogs_small/train/dogs"
+TRAINING_NEG_DIRECTORY = "cats_and_dogs_filtered/train/dogs"
 #TRAINING_NEG_DIRECTORY = "~/Documents/data/shiya_images/non_human/"
 
 MODEL_NAME = "dog_cat_model"
@@ -71,7 +72,7 @@ extract_features_inception_v3 <- function(img_path) {
   )
   
   # Use our custom crop function to remove the top 30px and bottom 120px of every image
-  img_crop = defined_crop(img, top_trim = TOP_TRIM, bottom_trim = BOTTOM_TRIM) # Trim infobar
+  img_crop = defined_crop(img, top_trim = TOP_TRIM, bottom_trim = BOTTOM_TRIM, min_width = 50, min_height = 50) # Trim infobar
   
   # Resize image to 299 x 299
   x = image_array_resize(img_crop, width=299, height=299)
@@ -99,7 +100,7 @@ classify_image_features <- function(feat) {
 # Get data...
 ###
 
-
+#ptm <- proc.time()
 # Load training images and get features
 pos_files = list.files(TRAINING_POS_DIRECTORY, pattern = "*.JPG|*.jpg", full.names = TRUE)
 pos_feature_list = list()
@@ -108,6 +109,7 @@ for (i in 1:length(pos_files)) {
   print(sprintf("[%d] Processing: %s\n", i, f))
   pos_feature_list[[f]] = extract_features_inception_v3(f)
 }
+#proc.time() - ptm
 
 # Load training images and get features
 neg_files = list.files(TRAINING_NEG_DIRECTORY, pattern = "*.JPG|*.jpg", full.names = TRUE)
@@ -175,10 +177,20 @@ classify_model %>% compile(
 )
 
 # Fit model
-classify_model %>% fit(train_x, train_y, epochs = 500, batch_size = 256)
+classify_model %>% fit(train_x, train_y, epochs = 200, batch_size = 256)
 
 # Evaluate model
 loss_and_metrics <- classify_model %>% evaluate(test_x, test_y, batch_size = 128)
+(loss_and_metrics)
+
+##prediction 
+prob_y <- classify_model %>% predict(test_x, batch_size = 128)
+pred_y = round(prob_y)
+
+# Confusion matrix
+conf_mat = table(pred_y, test_y)
+(conf_mat) # Count
+(prop.table(conf_mat)) # Proportion
 
 # Save the model to file
 classify_model %>% save_model_tf(MODEL_NAME)
