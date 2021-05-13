@@ -1,4 +1,4 @@
-# camptrap_classifier
+# camtrap_classifier
 
 The scrips implement the inception_v3 based classifier developed in Li et al (in prep). The scripts present three different processes:
 
