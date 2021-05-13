@@ -60,7 +60,13 @@ SOURCE_DIR = "cats_and_dogs_filtered/validation"
 
 This will generate feature files for each folder in the current working directory for the cats images and dogs images (~500 each).
 
-Finally point the `apply_model.R` script at the current working directory and it will find the `*_features_v3.csv` files and generate results files from them.
+Finally point the `apply_model.R` script at the current working directory:
+
+```
+SOURCE_DIR = "."
+```
+
+and it will find the `*_features_v3.csv` files and generate results files from them.
 
 *NB:* The script current defaults to trimming off 30px at the top of images and 120px at the bottom (which trims off the unique infobars for Browning and Reconyx images). The script will not trim images if the image is smaller than this combined trim + a minimum size (50px height/width). If applying this to resized images, note that trimming may not occur if the images are too small.
 
