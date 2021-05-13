@@ -36,6 +36,12 @@ Implemented in `html_results_viewer.R`
 
 I was struggling to see the results from the above in a useful way, so this script will take the results files and try to create an HTML file for each which shows you the image with a border (red or green) corresponding to the classification (negative or positive respectively). This only works if the original image files are available locally (on your local drive or a usb drive for example),
 
+## Update metadata (exif data)
+
+Implemented in `add_exif_data.R`
+
+This file updates the metadata of the source images using the results files. It will add metadata tags for the predicted class and associated probability. This should let the files be browsed and filtered in an image view/metadata editor.
+
 ## Extra files
 
 `crop_generator.py` - Small python script to quickly trim off a given portion of an image file
