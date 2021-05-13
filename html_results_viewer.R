@@ -4,6 +4,7 @@
 ###
 
 library(stringi)
+library(data.table)
 
 # Function to create html file from results and template file
 html_generator <- function(data, new_html_file, view = FALSE) {
@@ -12,10 +13,10 @@ html_generator <- function(data, new_html_file, view = FALSE) {
   lines <- readLines(template_htmlfile, warn=FALSE)
   
   # Convert data to an image with class given by classification
-  #new_html = sprintf("<img class = '%s img-thumbnail' width = 200 src='%s' />", data$class, data$filename)
+  #new_html = sprintf("<img class = '%s img-thumbnail' width='200' src='%s' />", data$class, data$filename)
   
   new_html = sprintf("<a href='%s' target='_blank'>
-      <img src='%s' alt='%s' class='%s' loading=lazy style='width:200px'>
+      <img src='%s' alt='%s' class='%s' loading='lazy' style='width:200px'>
     </a>", data$filename, data$filename, data$class, data$class)
   
   # Find the comment to replace in the image
