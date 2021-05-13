@@ -1,10 +1,13 @@
 ###
-# Script to take results file and visualise data
+# Script to take results file and visualise data as local HTML file
 # Assumes files are locally available (e.g. local disk or usb drive)
 ###
 
 library(stringi)
 library(data.table)
+
+# Source directory to look for results files in
+SOURCE_DIR = "~/Dropbox/R/inception_v3/"
 
 # Function to create html file from results and template file
 html_generator <- function(data, new_html_file, view = FALSE) {
@@ -37,18 +40,14 @@ html_generator <- function(data, new_html_file, view = FALSE) {
   }
 } #end html_generator
 
-#html_generator(results_df, "test.html", view = TRUE)
-
-
-# Source directory to look for feature files in
-SOURCE_DIR = "~/Dropbox/R/inception_v3/"
-
 # Look for feature files in the SOURCE_DIR
 files = list.files(SOURCE_DIR, pattern = "*_results_v3.csv", full.names = TRUE)
+
+# For each results file
 for (f in files) {
   print(sprintf("Processing file %s", f))
   
-  # Read in feature data
+  # Read in results data
   results_data = fread(f)
   
   # Generate html file of images
