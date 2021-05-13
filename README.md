@@ -7,7 +7,7 @@ The scrips implement the inception_v3 based classifier developed in Li et al (in
 1) Create training feature sets for positive and negative example images of a class (e.g. fox/non-fox) [including possibly trimming off any 'info bars']
 2) Create and save a simple MLP classifier to a named file
 
-Implemented in `shiya_model_trim.R`
+Implemented in `ctc_model_trim.R`
 
 This script will look in two directories (TRAINING_POS_DIRECTORY and TRAINING_NEG_DIRECTORY) for example images of a positive class (e.g. humans, cats, etc.) and a negative class (e.g. non-human, dogs, etc.). It currently expects those files to be JPEG files with the extension .jpg or .JPG.
 It will extract features from those images (and it now trims them 30px top, 120px bottom if they're large enough) then build a classifier from the features (2048 inputs into 784 hidden units into prediction). It will train that classifier and save it to the MODEL_NAME directory
@@ -43,7 +43,26 @@ I was struggling to see the results from the above in a useful way, so this scri
 
 ## Example
 
-There's also small folder of dog/cat images that the scripts use as an example (subsampled from the dog/cat image database), 
+The example code creates a classifier based on the cats/dogs dataset from: https://www.kaggle.com/c/dogs-vs-cats/data , a smaller version of this is available via Google: https://storage.googleapis.com/mledu-datasets/cats_and_dogs_filtered.zip
+
+To use this exaple, download the cats/dogs data training data and point the `ctc_model_trim.R` script at the training folders (~1000 images in each):
+
+```
+TRAINING_POS_DIRECTORY = "cats_and_dogs_filtered/train/cats" # Takes about 160 seconds on older Mac Pro 2013 (64Gb RAM)
+TRAINING_NEG_DIRECTORY = "cats_and_dogs_filtered/train/dogs"
+```
+
+Then point the `generate_features_files.R` at the validation folders:
+
+```
+SOURCE_DIR = "cats_and_dogs_filtered/validation"
+```
+
+This will generate feature files for each folder in the current working directory for the cats images and dogs images (~500 each).
+
+Finally point the `apply_model.R` script at the current working directory and it will find the `*_features_v3.csv` files and generate results files from them.
+
+*NB:* The script current defaults to trimming off 30px at the top of images and 120px at the bottom (which trims off the unique infobars for Browning and Reconyx images). The script will not trim images if the image is smaller than this combined trim + a minimum size (50px height/width). If applying this to resized images, note that trimming may not occur if the images are too small.
 
 # Installation.. 
 
