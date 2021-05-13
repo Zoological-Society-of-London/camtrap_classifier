@@ -15,6 +15,11 @@ MODEL_NAME = "dog_cat_model"
 # Classification threshold for predictions
 THRESHOLD = 0.5
 
+#positive_class_label = "human"
+#negative_class_label = "non-human"
+positive_class_label = "cat"
+negative_class_label = "dog"
+
 library(tensorflow)
 library(keras)
 library(data.table)
@@ -38,7 +43,7 @@ for (f in files) {
   result = tf$constant(as.matrix(input_data)) %>% classify_model
   
   result_table = data.table(filename = filenames, p = as.numeric(result))
-  result_table$class = ifelse(result_table$p > THRESHOLD, "positive", "negative")
+  result_table$class = ifelse(result_table$p > THRESHOLD, positive_class_label, negative_class_label)
   
   fwrite(result_table, file = gsub("_features_v3.csv", "_results_v3.csv", f))
   
